@@ -3,7 +3,7 @@ from app.models import Version
 import json
 
 def verify(request, app, version):
-    data = {}
+    data = None
     critical = False
     status = 200
     try:
@@ -14,11 +14,10 @@ def verify(request, app, version):
             for v in versions:
                 if v.type == 2:
                     critical = True
-                    status = 401
-
+            data = {}
             data['version_code'] = versions.first().version_code
             data['message'] = versions.first().message
-            data['store_url'] = versions.first().app.store_url
+            data['app_package'] = versions.first().app.package
             data['critical'] = critical
 
             return HttpResponse(json.dumps(data), status=status, content_type="application/json")

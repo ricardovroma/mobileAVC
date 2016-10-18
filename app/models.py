@@ -5,7 +5,7 @@ from django.db import models
 
 class App(models.Model):
     name = models.CharField(max_length=150, blank=False, null=False)
-    store_url = models.CharField(max_length=255, blank=False, null=False)
+    package = models.CharField(max_length=255, blank=False, null=False)
 
     def __unicode__(self):
         return self.name
@@ -18,7 +18,7 @@ class UpdateTypes():
 
 class Version(models.Model):
     app = models.ForeignKey(App, on_delete=models.CASCADE, blank=False, null=False)
-    version_code = models.CharField(max_length=150, blank=True, null=True)
+    version_code = models.IntegerField(blank=True, null=True)
     type = models.IntegerField(null=False, blank=False, verbose_name='Tipo',
                                choices=UpdateTypes.TYPES_UPDATE_CHOICES)
     message = models.TextField(default="")
